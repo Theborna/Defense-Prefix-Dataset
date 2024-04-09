@@ -10,7 +10,7 @@ from datasets.utils.make_dataset_train import make_image_text
 class Food101(Dataset.Food101):
     def __init__(self, root, split='test', transform=None, download=False):
         super().__init__(root, split, transform=transform, download=download)
-     
+        print('hi2')
         self._typographic_images_folder = self._base_folder / "typographic_images"
         with open(self._meta_folder / f"{split}.json") as f:
             metadata = json.loads(f.read())
@@ -47,8 +47,11 @@ class Food101(Dataset.Food101):
         return self._typographic_images_folder.is_dir()
 
     def _make_typographic_attack_dataset(self):
+        print('hi3')
         if self._check_exists_synthesized_dataset():
             return
         for i, file in enumerate(self._base_image_files):
+            print('hi4')
             text = make_image_text(file, self.classes, self._images_folder, self._typographic_images_folder, self._labels[i])
+            print(text)
             self._typographic_image_classes.append(text)
