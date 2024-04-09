@@ -31,8 +31,7 @@ class Food101(Dataset.Food101):
         self.templates = templates
 
     def __getitem__(self, idx):
-        image_file, typographic_image_file, label, typographic_label = self._image_files[idx],
-        self._typographic_image_files[idx], self._labels[idx], self._typographic_image_classes[idx]
+        image_file, typographic_image_file, label, typographic_label = self._image_files[idx], self._typographic_image_files[idx], self._labels[idx], self._typographic_image_classes[idx]
         image, typographic_image = Image.open(image_file).convert("RGB"), Image.open(typographic_image_file).convert("RGB")
 
         if self.transform:
