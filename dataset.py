@@ -26,6 +26,7 @@ def dataset(args, preprocess):
     elif args.dataset == 'flowers':
         data = Flowers102(root='datasets', split='test', transform=preprocess, download=True, make_typographic_dataset=True)
     elif args.dataset == 'food':
+        print('hi')
         data = Food101(root='datasets', split='test', transform=preprocess, download=True)
     elif args.dataset == 'aircraft':
         data = FGVCAircraft(root='datasets', split='test', transform=preprocess, download=True)
