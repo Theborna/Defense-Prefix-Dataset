@@ -31,7 +31,8 @@ class Food101(Dataset.Food101):
         self.templates = templates
 
     def __getitem__(self, idx):
-        image_file, typographic_image_file, label = self._image_files[idx], self._typographic_image_files[idx], self._labels[idx]
+        image_file, typographic_image_file, label, typographic_label = self._image_files[idx],
+        self._typographic_image_files[idx], self._labels[idx], self._typographic_image_classes[idx]
         image, typographic_image = Image.open(image_file).convert("RGB"), Image.open(typographic_image_file).convert("RGB")
 
         if self.transform:
@@ -40,7 +41,7 @@ class Food101(Dataset.Food101):
         if self.target_transform:
             label = self.target_transform(label)
 
-        return image, typographic_image, label
+        return image, typographic_image, label, typographic_label
 
     def _check_exists_synthesized_dataset(self) -> bool:
         return self._typographic_images_folder.is_dir()
