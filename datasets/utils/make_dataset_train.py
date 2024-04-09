@@ -67,6 +67,9 @@ def make_image_text(file, classes, img_dir, target_dir, idx, font_path="datasets
    
     os.makedirs(dir, exist_ok=True)
     img.save(target_dir / file, quality=100)
+    
+    # Added by me
+    return text
 
 if __name__ == "__main__":
     classes = ["apple"]

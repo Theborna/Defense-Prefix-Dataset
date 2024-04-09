@@ -11,7 +11,8 @@ class Flowers102(Dataset.Flowers102):
 
         self._typographic_images_folder = self._base_folder / 'typographic_images'
         self._typographic_image_files = [self._typographic_images_folder / image.name for image in self._image_files]
-
+        self._typographic_image_classes = []
+        
         self.classes = classes 
         self.templates = templates
 
@@ -38,7 +39,8 @@ class Flowers102(Dataset.Flowers102):
 
         self._typographic_images_folder.mkdir()
         for i, file in enumerate(self._image_files):
-            make_image_text(file.name, self.classes, self._images_folder, self._typographic_images_folder, self._labels[i])
+            text = make_image_text(file, self.classes, self._images_folder, self._typographic_images_folder, self._labels[i])
+            self._typographic_image_classes.append(text)
             
     def _check_typographic_exists(self):
         return self._typographic_images_folder.exists()
