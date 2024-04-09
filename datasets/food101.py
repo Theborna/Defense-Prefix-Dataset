@@ -46,7 +46,6 @@ class Food101(Dataset.Food101):
         return self._typographic_images_folder.is_dir()
 
     def _make_typographic_attack_dataset(self):
-        print('hi3')
         if self._check_exists_synthesized_dataset():
             return
         for i, file in enumerate(self._base_image_files):
