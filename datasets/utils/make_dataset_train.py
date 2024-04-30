@@ -51,25 +51,28 @@ def adjust_font_size(img_size, imagedraw, text, font_path):
 
     return font, txpos, (w, h)
 
-def make_image_text(file, classes, img_dir, target_dir, idx, font_path="datasets/font/"): 
-    
+def make_image_text(file, classes, img_dir, target_dir, idx, font_dir="datasets/font/", num_typographic=3): 
     img = _transform(Image.open(img_dir / file))
-    text = random.choice(classes)
-    font_path = os.path.join(font_path, random.choice(font))
-    while text == classes[idx]:
-        text = random.choice(classes)
-    fill, stroke = random.choice(color), random.choice(color)
-    while fill == stroke:
-        stroke = random.choice(color)
     
-    img = create_image(img, text, font_path, fill, stroke)
     dir = target_dir / "/".join(str(file).split("/")[:-1])
-   
     os.makedirs(dir, exist_ok=True)
-    img.save(target_dir / file, quality=100)
     
-    # Added by me
-    return classes.index(text)
+    class_idx = []
+    
+    for i in range(num_typographic):
+        text = random.choice(classes)
+        while text == classes[idx]:
+            text = random.choice(classes)
+        fill, stroke = random.choice(color), random.choice(color)
+        while fill == stroke:
+            stroke = random.choice(color)
+        class_idx.append(classes.index(text))
+        font_path = os.path.join(font_path, random.choice(font))
+        
+        modified_img = create_image(img.copy(), text, font_path, fill, stroke)
+        modified_img.save(dir / f"{i}_{file}", quality=100)
+    
+    return class_idx
 
 if __name__ == "__main__":
     classes = ["apple"]

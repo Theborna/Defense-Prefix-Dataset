@@ -49,5 +49,5 @@ class Food101(Dataset.Food101):
         if self._check_exists_synthesized_dataset():
             return
         for i, file in enumerate(self._base_image_files):
-            label = make_image_text(file, self.classes, self._images_folder, self._typographic_images_folder, self._labels[i])
+            label = make_image_text(file, self.classes, self._images_folder, self._typographic_images_folder, self._labels[i], num_typographic=5)
             self._typographic_image_classes.append(label)
