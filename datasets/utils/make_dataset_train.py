@@ -51,7 +51,7 @@ def adjust_font_size(img_size, imagedraw, text, font_path):
 
     return font, txpos, (w, h)
 
-def make_image_text(file, classes, img_dir, target_dir, idx, font_dir="datasets/font/", num_typographic=3): 
+def make_image_text(file, classes, img_dir, target_dir, idx, font_path="datasets/font/", num_typographic=3): 
     img = _transform(Image.open(img_dir / file))
     
     dir = target_dir / "/".join(str(file).split("/")[:-1])
