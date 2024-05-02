@@ -59,6 +59,7 @@ def make_image_text(file, classes, img_dir, target_dir, idx, font_path="datasets
     
     class_idx = []
     
+    font_path = os.path.join(font_path, random.choice(font))
     for i in range(num_typographic):
         text = random.choice(classes)
         while text == classes[idx]:
@@ -67,10 +68,9 @@ def make_image_text(file, classes, img_dir, target_dir, idx, font_path="datasets
         while fill == stroke:
             stroke = random.choice(color)
         class_idx.append(classes.index(text))
-        font_path = os.path.join(font_path, random.choice(font))
         
         modified_img = create_image(img.copy(), text, font_path, fill, stroke)
-        modified_img.save(dir / f"_{i}.jpg", quality=80)
+        modified_img.save(dir / f"{str(file).split("/")[:-1]}_{i}.jpg", quality=80)
     
     return class_idx
 
