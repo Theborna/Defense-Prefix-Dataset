@@ -5,6 +5,7 @@ from PIL import Image
 
 from datasets.configs.food101_config import templates
 from datasets.utils.make_dataset_train import make_image_text
+from tqdm import tqdm
 
 
 class Food101(Dataset.Food101):
@@ -20,6 +21,7 @@ class Food101(Dataset.Food101):
         self.num_typographic_images = 5
         
         for class_label, im_rel_paths in metadata.items():
+            print(f"{im_rel_paths[0]}_{0}.jpg")
             self._typographic_image_files += [
                 [self._typographic_images_folder.joinpath(*f"{im_rel_path}_{i}.jpg".split("/")) for i in range(self.num_typographic_images)] for im_rel_path in im_rel_paths
             ]
@@ -49,7 +51,7 @@ class Food101(Dataset.Food101):
     def _make_typographic_attack_dataset(self):
         if self._check_exists_synthesized_dataset():
             return
-        for i, file in enumerate(self._base_image_files):
+        for i, file in tqdm(enumerate(self._base_image_files)):
             labels = make_image_text(
                 file, self.classes, self._images_folder, self._typographic_images_folder,
                 self._labels[i], num_typographic=self.num_typographic_images

@@ -70,7 +70,7 @@ def make_image_text(file, classes, img_dir, target_dir, idx, font_path="datasets
         class_idx.append(classes.index(text))
         
         modified_img = create_image(img.copy(), text, font_path, fill, stroke)
-        name = str(file).split("/")[-1]
+        name = str(file).split("/")[-1].split(".")[0]
         modified_img.save(dir / f"{name}_{i}.jpg", quality=80)
     
     return class_idx
