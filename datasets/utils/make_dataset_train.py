@@ -70,7 +70,7 @@ def make_image_text(file, classes, img_dir, target_dir, idx, font_path="datasets
         font_path = os.path.join(font_path, random.choice(font))
         
         modified_img = create_image(img.copy(), text, font_path, fill, stroke)
-        modified_img.save(dir / f"{i}_{file}", quality=100)
+        modified_img.save(dir / f"_{i}", quality=100)
     
     return class_idx
 
