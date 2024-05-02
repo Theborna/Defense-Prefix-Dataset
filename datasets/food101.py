@@ -21,7 +21,7 @@ class Food101(Dataset.Food101):
         self.num_typographic_images = 5
         
         for class_label, im_rel_paths in metadata.items():
-            print(f"{im_rel_paths[0]}_{0}.jpg")
+            print([self._typographic_images_folder.joinpath(*f"{im_rel_paths[0]}_{i}.jpg".split("/")) for i in range(self.num_typographic_images)])
             self._typographic_image_files += [
                 [self._typographic_images_folder.joinpath(*f"{im_rel_path}_{i}.jpg".split("/")) for i in range(self.num_typographic_images)] for im_rel_path in im_rel_paths
             ]
