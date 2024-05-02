@@ -17,10 +17,11 @@ class Food101(Dataset.Food101):
         self._typographic_image_files = []
         self._base_image_files = []
         self._typographic_image_classes = []
+        self.num_typographic_images = 5
         
         for class_label, im_rel_paths in metadata.items():
             self._typographic_image_files += [
-                self._typographic_images_folder.joinpath(*f"{im_rel_path}.jpg".split("/")) for im_rel_path in im_rel_paths
+                [self._typographic_images_folder.joinpath(*f"{im_rel_path}_{i}.jpg".split("/")) for i in range(self.num_typographic_images)] for im_rel_path in im_rel_paths
             ]
             self._base_image_files += ["/".join(f"{im_rel_path}.jpg".split("/")) for im_rel_path in im_rel_paths]
 
@@ -49,5 +50,8 @@ class Food101(Dataset.Food101):
         if self._check_exists_synthesized_dataset():
             return
         for i, file in enumerate(self._base_image_files):
-            label = make_image_text(file, self.classes, self._images_folder, self._typographic_images_folder, self._labels[i], num_typographic=5)
-            self._typographic_image_classes.append(label)
+            labels = make_image_text(
+                file, self.classes, self._images_folder, self._typographic_images_folder,
+                self._labels[i], num_typographic=self.num_typographic_images
+            )
+            self._typographic_image_classes.append(labels)
