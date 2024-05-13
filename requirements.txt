@@ -9,4 +9,6 @@ scipy
 # omegaconf
 # pytorch-lightning
 # einops
-transformers
+torchvision
+transformers==4.38.2
+accelerate
