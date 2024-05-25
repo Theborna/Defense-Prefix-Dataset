@@ -67,15 +67,18 @@ class SUN397(VisionDataset):
         with open(self._split) as f:
             split_dict = json.load(f)
 
-        self._all_image_files = [v[0] for v in split_dict["train"]] + [v[0] for v in split_dict["test"]]
-        self._all_labels = [v[1] for v in split_dict["train"]] + [v[1] for v in split_dict["test"]]
+        self._all_image_files = [v[0] for v in split_dict["train"]] + [v[0] for v in split_dict["test"]] + [v[0] for v in split_dict["val"]]
+        self._all_labels = [v[1] for v in split_dict["train"]] + [v[1] for v in split_dict["test"]] + [v[1] for v in split_dict["val"]]
         
         if split == 'train':
             self._split_image_files = [v[0] for v in split_dict["train"]]
             self._split_labels = [v[1] for v in split_dict["train"]]
-        else:
+        elif split == 'test':
             self._split_image_files = [v[0] for v in split_dict["test"]]
             self._split_labels = [v[1] for v in split_dict["test"]]
+        else:
+            self._split_image_files = self._all_image_files
+            self._split_labels = self._all_labels
         
         self._make_typographic_attack_dataset()
 
