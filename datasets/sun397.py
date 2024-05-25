@@ -43,8 +43,8 @@ class SUN397(VisionDataset):
     ) -> None:
         super().__init__(root, transform=transform, target_transform=target_transform)
 
-        self._data_dir = Path(self.root) / "sun" / "images"
-        self._typographic_dir = Path(self.root) / "sun" / "typographic_images"
+        self._data_dir = Path(self.root) / "SUN397"
+        self._typographic_dir = Path(self.root) / "SUN397" / "typographic_images"
         self._split = Path(self.root) / "configs" / "split_zhou_SUN397.json"
         self.num_typographic_images = num_typographic_images
         self._typographic_image_classes = []
@@ -67,26 +67,29 @@ class SUN397(VisionDataset):
         with open(self._split) as f:
             split_dict = json.load(f)
 
+        self._all_image_files = [v[0] for v in split_dict["train"]] + [v[0] for v in split_dict["test"]]
+        self._all_labels = [v[1] for v in split_dict["train"]] + [v[1] for v in split_dict["test"]]
+        
         if split == 'train':
-            split_data = split_dict["train"]
+            self._split_image_files = [v[0] for v in split_dict["train"]]
+            self._split_labels = [v[1] for v in split_dict["train"]]
         else:
-            split_data = split_dict["test"]
-
-        self._all_image_files = [v[0] for v in split_data]
-        self._all_labels = [v[1] for v in split_data]
-
-        self._split_image_files = [v[0] for v in split_data]
-        self._split_labels = [v[1] for v in split_data]
-
+            self._split_image_files = [v[0] for v in split_dict["test"]]
+            self._split_labels = [v[1] for v in split_dict["test"]]
+        
         self._make_typographic_attack_dataset()
+
+        self._typographic_image_files = [
+            [self._typographic_dir.joinpath(*f"{im_rel_path.split('.')[0]}_{i}.jpg".split("/")) for i in range(self.num_typographic_images)] for im_rel_path in self._split_image_files
+        ]
 
     def __len__(self) -> int:
         return len(self._split_image_files)
 
     def __getitem__(self, idx):
-        image_file = self._image_files[idx]
+        image_file = self._data_dir / self._split_image_files[idx]
         typographic_image_files = self._typographic_image_files[idx]
-        label = self._labels[idx]
+        label = self._split_labels[idx]
         typographic_label = self._typographic_image_classes[idx]
         image = PIL.Image.open(image_file).convert("RGB")
         typographic_images = [PIL.Image.open(typographic_image_file).convert("RGB") for typographic_image_file in typographic_image_files]
@@ -97,7 +100,7 @@ class SUN397(VisionDataset):
 
         if self.target_transform:
             label = self.target_transform(label)    
-
+        
         return image, typographic_images, label, typographic_label
 
     def _check_exists(self) -> bool:
@@ -117,6 +120,6 @@ class SUN397(VisionDataset):
         for i, file in tqdm(enumerate(self._split_image_files), total=len(self._split_image_files)):
             labels = make_image_text(
                 file, self.classes, self._data_dir, self._typographic_dir, self._split_labels[i], 
-                num_typographic_images=self.num_typographic_images
+                num_typographic=self.num_typographic_images
             )
             self._typographic_image_classes.append(labels)

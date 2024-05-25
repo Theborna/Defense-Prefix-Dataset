@@ -20,21 +20,21 @@ def dataset(args, preprocess):
     elif args.dataset == 'caltech':
         data = Caltech101(root='datasets', transform=preprocess, download=True, make_typographic_dataset=True, num_typographic_images=args.num_typographic)
     elif args.dataset == 'pets':
-        data = OxfordIIITPet(root='datasets', split='test', transform=preprocess, download=True, make_typographic_dataset=True, num_typographic_images=args.num_typographic)
+        data = OxfordIIITPet(root='datasets', split='train', transform=preprocess, download=True, make_typographic_dataset=True, num_typographic_images=args.num_typographic)
     elif args.dataset == 'cars':
-        data = StanfordCars(root='datasets', split='test', transform=preprocess, download=True, make_typographic_dataset=True, num_typographic_images=args.num_typographic)
+        data = StanfordCars(root='datasets', split='train', transform=preprocess, download=True, make_typographic_dataset=True, num_typographic_images=args.num_typographic)
     elif args.dataset == 'flowers':
-        data = Flowers102(root='datasets', split='test', transform=preprocess, download=True, make_typographic_dataset=True, num_typographic_images=args.num_typographic)
+        data = Flowers102(root='datasets', split='train', transform=preprocess, download=True, make_typographic_dataset=True, num_typographic_images=args.num_typographic)
     elif args.dataset == 'food':
-        data = Food101(root='datasets', split='test', transform=preprocess, download=True, num_typographic_images=args.num_typographic)
+        data = Food101(root='datasets', split='train', transform=preprocess, download=True, num_typographic_images=args.num_typographic)
     elif args.dataset == 'aircraft':
-        data = FGVCAircraft(root='datasets', split='test', transform=preprocess, download=True, num_typographic_images=args.num_typographic)
+        data = FGVCAircraft(root='datasets', split='train', transform=preprocess, download=True, num_typographic_images=args.num_typographic)
     elif args.dataset == 'dtd':
-        data = DTD(root='datasets', split='test', transform=preprocess, download=True, num_typographic_images=args.num_typographic)
+        data = DTD(root='datasets', split='train', transform=preprocess, download=True, num_typographic_images=args.num_typographic)
     elif args.dataset == 'eurosat':
-        data = EuroSAT(root='datasets', split='test', transform=preprocess, download=True, num_typographic_images=args.num_typographic)
+        data = EuroSAT(root='datasets', split='train', transform=preprocess, download=True, num_typographic_images=args.num_typographic)
     elif args.dataset == 'sun':
-        data = SUN397(root='datasets', split='test', transform=preprocess, download=True, num_typographic_images=args.num_typographic)
+        data = SUN397(root='datasets', split='train', transform=preprocess, download=True, num_typographic_images=args.num_typographic)
     # real world data
     elif args.dataset == 'paint':
         data = PAINTDataset(root='datasets', transform=preprocess)
