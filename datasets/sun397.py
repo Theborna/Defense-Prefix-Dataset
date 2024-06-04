@@ -87,7 +87,7 @@ class SUN397(VisionDataset):
         ]
 
     def __len__(self) -> int:
-        return len(self._split_image_files)
+        return len(self._split_image_files) - 1
 
     def __getitem__(self, idx):
         image_file = self._data_dir / self._split_image_files[idx]
